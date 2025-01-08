@@ -54,7 +54,14 @@ def main():
     # Simulation: Calculate probabilities
     overs_left = st.sidebar.slider("Overs Left:", min_value=1, max_value=20, value=20)
     wickets_in_hand = st.sidebar.slider("Wickets In Hand:", min_value=1, max_value=10, value=10)
-    runs_to_target = st.sidebar.slider("Runs Needed to Target:", min_value=1, max_value=target, value=target)
+
+    # Validate `target` for the slider
+    if target < 1:
+        target = 1
+
+    runs_to_target = st.sidebar.slider(
+        "Runs Needed to Target:", min_value=1, max_value=int(target), value=int(target)
+    )
 
     balls_left = overs_left * 6
 
@@ -69,6 +76,7 @@ def main():
     ax.set_ylabel("Probability (%)")
     ax.set_title("Win vs Lose Probability")
     st.pyplot(fig)
+
 
 if __name__ == "__main__":
     main()
