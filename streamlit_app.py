@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load SA20 data
-@st.cache
+@st.cache_data
 def load_data():
     return pd.read_csv('Dataset/SA20_data.csv')
 
@@ -26,18 +26,26 @@ def main():
     st.title("SA20 Chase Simulation")
     st.sidebar.header("Match Setup")
 
+    # Predefined Teams
+    teams = [
+        "Paarl Royals",
+        "MI Cape Town",
+        "Joburg Super Kings",
+        "Durban's Super Giants",
+        "Pretoria Capitals",
+        "Sunrisers Eastern Cape"
+    ]
+
     # User inputs
-    team_1 = st.sidebar.text_input("Enter Team 1:")
-    team_2 = st.sidebar.text_input("Enter Team 2:")
-    chasing_team = st.sidebar.selectbox("Select Chasing Team:", [team_1, team_2])
-    bowling_team = team_1 if chasing_team == team_2 else team_2
+    chasing_team = st.sidebar.selectbox("Select Chasing Team:", teams)
+    bowling_team = st.sidebar.selectbox("Select Bowling Team:", [team for team in teams if team != chasing_team])
     target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
 
     # Load and filter data
     data = load_data()
-    
-    match_data = data[data["batting_team"] == chasing_team]
-    
+
+    match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
+
     # Display inputs and options
     st.write(f"Chasing Team: {chasing_team}")
     st.write(f"Bowling Team: {bowling_team}")
@@ -64,3 +72,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
