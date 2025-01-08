@@ -210,9 +210,9 @@ def main():
             req_value = find_runs(target_score, current_wks, at_overs)
             req_wk_value = find_wickets(target_score, current_wks, at_overs)
     
-            if at_overs == 10:
-                req_value = 75
-                req_wk_value = 1
+            # if at_overs == 10:
+            #     req_value = 75
+            #     req_wk_value = 1
     
             y = np.array([req_value for i in range(51)])
     
