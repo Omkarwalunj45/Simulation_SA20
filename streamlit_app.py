@@ -95,62 +95,62 @@ def main():
     t2_pb = [i/sum(t2_outcomes_count) for i in t2_outcomes_count]    
 
     def get_pbvalues(teamName):
-    if teamName == 't1':
-        p_0 = t1_pb[0]
-        p_1 = t1_pb[0] + t1_pb[1]
-        p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2]
-        p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
-        p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
-        p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
-        p_w = 1
-
-    elif teamName == 't2':
-        p_0 = t2_pb[0]
-        p_1 = t2_pb[0] + t2_pb[1]
-        p_2 = t2_pb[0] + t2_pb[1] + t2_pb[2]
-        p_3 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3]
-        p_4 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4]
-        p_6 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4] + t2_pb[5]
-        p_w = 1
-
-    return p_0, p_1, p_2, p_3, p_4, p_6, p_w
+        if teamName == 't1':
+            p_0 = t1_pb[0]
+            p_1 = t1_pb[0] + t1_pb[1]
+            p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2]
+            p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
+            p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
+            p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
+            p_w = 1
+    
+        elif teamName == 't2':
+            p_0 = t2_pb[0]
+            p_1 = t2_pb[0] + t2_pb[1]
+            p_2 = t2_pb[0] + t2_pb[1] + t2_pb[2]
+            p_3 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3]
+            p_4 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4]
+            p_6 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4] + t2_pb[5]
+            p_w = 1
+    
+        return p_0, p_1, p_2, p_3, p_4, p_6, p_w
 
     def predict_runs(target, current_score, current_wickets, current_overs):
 
-    # pb values of both teams
-    i1p_0, i1p_1, i1p_2, i1p_3, i1p_4, i1p_6, i1p_w = get_pbvalues(t1)
-    i2p_0, i2p_1, i2p_2, i2p_3, i2p_4, i2p_6, i2p_w = get_pbvalues(t2)
-
-    pred_runs = current_score
-    pred_wks = current_wickets
-    leftover_balls = 300 - current_overs*6
-
-    for i in range(leftover_balls):
-        r_value = np.random.random()
-
-        if r_value <= i2p_0:
-            pred_runs += 0
-        elif r_value <= i2p_1:
-            pred_runs += 1
-        elif r_value <= i2p_2:
-            pred_runs += 2
-        elif r_value <= i2p_3:
-            pred_runs += 3
-        elif r_value <= i2p_4:
-            pred_runs += 4
-        elif r_value <= i2p_6:
-            pred_runs += 6
-        else:
-            pred_runs += 0
-            pred_wks += 1
-            if pred_wks == 10:
+        # pb values of both teams
+        i1p_0, i1p_1, i1p_2, i1p_3, i1p_4, i1p_6, i1p_w = get_pbvalues(t1)
+        i2p_0, i2p_1, i2p_2, i2p_3, i2p_4, i2p_6, i2p_w = get_pbvalues(t2)
+    
+        pred_runs = current_score
+        pred_wks = current_wickets
+        leftover_balls = 300 - current_overs*6
+    
+        for i in range(leftover_balls):
+            r_value = np.random.random()
+    
+            if r_value <= i2p_0:
+                pred_runs += 0
+            elif r_value <= i2p_1:
+                pred_runs += 1
+            elif r_value <= i2p_2:
+                pred_runs += 2
+            elif r_value <= i2p_3:
+                pred_runs += 3
+            elif r_value <= i2p_4:
+                pred_runs += 4
+            elif r_value <= i2p_6:
+                pred_runs += 6
+            else:
+                pred_runs += 0
+                pred_wks += 1
+                if pred_wks == 10:
+                    break
+            if pred_runs > target:
                 break
-        if pred_runs > target:
-            break
-        # print('pred_runs: ', pred_runs)
-        # print('pred_wks: ', pred_wks)
-
-        return pred_runs
+            # print('pred_runs: ', pred_runs)
+            # print('pred_wks: ', pred_wks)
+    
+            return pred_runs
     def find_wickets(current_score, target, current_wickets, at_overs):
 
     #     find_runs(current_score, target, current_wickets, at_overs)
@@ -242,15 +242,48 @@ def main():
     
         return required_runs
 
-    # # Display Probability
-    # st.write(f"Win Probability: {win_prob * 100:.2f}%")
+    def find_runs_wickets(current_wks, at_overs, target_score):
+        plt.figure(figsize=(23, 10))
+        
+        # Calculate required values using custom logic
+        req_value = find_runs(target_score, current_wks, at_overs)
+        req_wk_value = find_wickets(target_score, current_wks, at_overs)
+    
+        if at_overs == 10:
+            req_value = 75
+            req_wk_value = 1
+    
+        y = np.array([req_value for i in range(51)])
+    
+        plt.scatter(at_overs, req_value, s=3000, color='red')
+        plt.axhline(target_score, ls='--', color='blue')
+        plt.text(1, target_score + 10, 'Target Score :' + str(target_score), color='darkblue', fontsize=13)
+        plt.text(at_overs, req_value, str(req_value) + '/' + str(req_wk_value), color='white', fontsize=12,
+                 horizontalalignment='center', verticalalignment='center')
+        plt.text(at_overs, req_value - 30, 'IND has to be at ' + str(req_value) + '/' + str(req_wk_value) + ' after ' + str(at_overs) + ' ov', horizontalalignment='center')
+        plt.ylim(50, target_score + 50)
+        plt.xticks(np.arange(0, 51, 1))
+        plt.title('Where should IND be?', fontsize=20)
+        plt.xlabel('Overs')
+        plt.ylabel('Score')
+        st.pyplot(plt)
+    
+    # Streamlit sliders for user input
+    current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
+    at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
+    target_score = st.slider('Target Score', min_value=0, max_value=300, step=1, value=230)
+    
+    # Plot the graph based on the user input
 
-    # Visualization
-    fig, ax = plt.subplots()
-    ax.bar(["Win", "Lose"], [win_prob * 100, (1 - win_prob) * 100], color=["green", "red"])
-    ax.set_ylabel("Probability (%)")
-    ax.set_title("Win vs Lose Probability")
-    st.pyplot(fig)
+    # # # Display Probability
+    # # st.write(f"Win Probability: {win_prob * 100:.2f}%")
+
+    # # Visualization
+    # fig, ax = plt.subplots()
+    # ax.bar(["Win", "Lose"], [win_prob * 100, (1 - win_prob) * 100], color=["green", "red"])
+    # ax.set_ylabel("Probability (%)")
+    # ax.set_title("Win vs Lose Probability")
+    # st.pyplot(fig)
 
 
 
