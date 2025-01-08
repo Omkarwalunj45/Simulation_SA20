@@ -7,8 +7,6 @@ import matplotlib.pyplot as plt
 @st.cache_data
 def load_data():
     return pd.read_csv('Dataset/SA20_data.csv')
-    df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
-    df['isOut'] = df['player_dismissed'].apply(lambda x: 1 if type(x) == type('str') else 0)
 
 # Calculate win probabilities (adapted for T20)
 def calculate_win_probability(overs_left, wickets_in_hand, runs_to_target, balls_left):
@@ -45,6 +43,8 @@ def main():
     
         # Load and filter data
         df = load_data()
+        df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
+        df['isOut'] = df['player_dismissed'].apply(lambda x: 1 if type(x) == type('str') else 0)    
     
         # match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
     
