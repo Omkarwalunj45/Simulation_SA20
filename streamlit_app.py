@@ -22,7 +22,7 @@ def calculate_win_probability(overs_left, wickets_in_hand, runs_to_target, balls
     return min(max(win_probability, 0), 1)  # Ensure probability stays between 0 and 1
 
 # Streamlit App
-    def main():
+def main():
         st.title("SA20 Chase Simulation")
         st.sidebar.header("Match Setup")
     
