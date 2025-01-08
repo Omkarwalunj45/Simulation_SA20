@@ -216,36 +216,36 @@ def main():
     
             y = np.array([req_value for i in range(51)])
     
-            def plot_chase_simulation(at_overs, req_value, req_wk_value, target_score):
-                # Create a plot
-                fig, ax = plt.subplots(figsize=(23, 10))
-                
-                # Scatter plot for the required score at the given overs
-                ax.scatter(at_overs, req_value, s=3000, color='red')
+        def plot_chase_simulation(at_overs, req_value, req_wk_value, target_score):
+            # Create a plot
+            fig, ax = plt.subplots(figsize=(23, 10))
             
-                # Draw horizontal line at target score
-                ax.axhline(target_score, ls='--', color='blue')
-            
-                # Add text labels
-                ax.text(1, target_score + 10, f'Target Score: {target_score}', color='darkblue', fontsize=13)
-                ax.text(at_overs, req_value, f'{req_value}/{req_wk_value}', color='white', fontsize=12,
-                        horizontalalignment='center', verticalalignment='center')
-                ax.text(at_overs, req_value - 30, f'IND has to be at {req_value}/{req_wk_value} after {at_overs} ov',
-                        horizontalalignment='center')
-            
-                # Set y-axis limits
-                ax.set_ylim(50, target_score + 50)
-            
-                # Set x-ticks
-                ax.set_xticks(np.arange(0, 51, 1))
-            
-                # Set titles and labels
-                ax.set_title('Where should IND be?', fontsize=20)
-                ax.set_xlabel('Overs')
-                ax.set_ylabel('Score')
-            
-                # Display plot in Streamlit
-                st.pyplot(fig)
+            # Scatter plot for the required score at the given overs
+            ax.scatter(at_overs, req_value, s=3000, color='red')
+        
+            # Draw horizontal line at target score
+            ax.axhline(target_score, ls='--', color='blue')
+        
+            # Add text labels
+            ax.text(1, target_score + 10, f'Target Score: {target_score}', color='darkblue', fontsize=13)
+            ax.text(at_overs, req_value, f'{req_value}/{req_wk_value}', color='white', fontsize=12,
+                    horizontalalignment='center', verticalalignment='center')
+            ax.text(at_overs, req_value - 30, f'IND has to be at {req_value}/{req_wk_value} after {at_overs} ov',
+                    horizontalalignment='center')
+        
+            # Set y-axis limits
+            ax.set_ylim(50, target_score + 50)
+        
+            # Set x-ticks
+            ax.set_xticks(np.arange(0, 51, 1))
+        
+            # Set titles and labels
+            ax.set_title('Where should IND be?', fontsize=20)
+            ax.set_xlabel('Overs')
+            ax.set_ylabel('Score')
+        
+            # Display plot in Streamlit
+            st.pyplot(fig)
     
         current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
         at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
