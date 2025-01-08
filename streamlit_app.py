@@ -44,24 +44,24 @@ def main():
     # Load and filter data
     data = load_data()
 
-    match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
+    # match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
 
     # Display inputs and options
     st.write(f"Chasing Team: {chasing_team}")
     st.write(f"Bowling Team: {bowling_team}")
     st.write(f"Target: {target}")
 
-    # Simulation: Calculate probabilities
-    overs_left = st.sidebar.slider("Overs Left:", min_value=1, max_value=20, value=20)
-    wickets_in_hand = st.sidebar.slider("Wickets In Hand:", min_value=1, max_value=10, value=10)
+    # # Simulation: Calculate probabilities
+    # overs_left = st.sidebar.slider("Overs Left:", min_value=1, max_value=20, value=20)
+    # wickets_in_hand = st.sidebar.slider("Wickets In Hand:", min_value=1, max_value=10, value=10)
 
-    # Validate `target` for the slider
-    if target < 1:
-        target = 1
+    # # Validate `target` for the slider
+    # if target < 1:
+    #     target = 1
 
-    runs_to_target = st.sidebar.slider(
-        "Runs Needed to Target:", min_value=1, max_value=int(target), value=int(target)
-    )
+    # runs_to_target = st.sidebar.slider(
+    #     "Runs Needed to Target:", min_value=1, max_value=int(target), value=int(target)
+    # )
 
     balls_left = overs_left * 6
     t1= chasing_team
