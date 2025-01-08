@@ -42,7 +42,7 @@ def main():
     target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
 
     # Load and filter data
-    data = load_data()
+    df = load_data()
 
     # match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
 
@@ -63,7 +63,7 @@ def main():
     #     "Runs Needed to Target:", min_value=1, max_value=int(target), value=int(target)
     # )
 
-    balls_left = overs_left * 6
+    # balls_left = overs_left * 6
     t1= chasing_team
     t1_outs = df[df.batting_team == t1].isOut.sum()
     t2_outs = df[df.batting_team == t2].isOut.sum()
