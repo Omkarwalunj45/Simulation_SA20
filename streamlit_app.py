@@ -195,12 +195,12 @@ def main():
         return req_wicket_value
     
     def get_win(pred_runs, target):
-    if pred_runs > target:
-        return 'win'
-    elif pred_runs == target:
-        return 'tie'
-    else:
-        return 'lose'
+        if pred_runs > target:
+            return 'win'
+        elif pred_runs == target:
+            return 'tie'
+        else:
+            return 'lose'
 
 
 
