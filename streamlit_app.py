@@ -27,7 +27,7 @@ def main():
         # Load and filter data
         df = load_data()
         # df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
-        df['isOut'] = df['player_dismissed'].apply(lambda x: 1 if type(x) == type('str') else 0)    
+        df['isOut'] = df['is_wkt']    
         
     
         # match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
