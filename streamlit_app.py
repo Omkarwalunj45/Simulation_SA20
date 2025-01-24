@@ -2,9 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
-from ipywidgets import interactive
-import ipywidgets as widgets
 # Load ODI data
 @st.cache_data
 def load_data():
@@ -191,7 +188,9 @@ def main():
                     break
     
             return req_wicket_value
-    
+        %matplotlib inline
+        from ipywidgets import interactive
+        import ipywidgets as widgets
         def find_runs_wickets(current_wks, at_overs, target_score):
             plt.figure(figsize=(53, 30))
     
