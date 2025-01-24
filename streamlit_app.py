@@ -234,6 +234,7 @@ def main():
         current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
         at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
         target_score = st.slider('Target Score', min_value=0, max_value=300, step=1, value=230)
+        req_value=input('Current Runs')
 
     
         # Call plotting function
