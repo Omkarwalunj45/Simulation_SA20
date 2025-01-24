@@ -220,7 +220,7 @@ def main():
         ax.set_xlabel("Overs")
         ax.set_ylabel("Score")
         ax.legend()
-        
+        fig, ax = plt.subplots(figsize=(20, 10))
         # Displaying the plot
         st.pyplot(fig)
         
