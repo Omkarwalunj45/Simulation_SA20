@@ -141,7 +141,7 @@ def main():
                 tie_count = 0
                 lose_count = 0
     
-                for j in range(100):
+                for j in range(1000):
                     pred_runs = predict_runs(target, i, current_wickets, at_overs)
                     runs_ls.append(pred_runs)
                     result_pred = get_win(pred_runs, target)
@@ -159,7 +159,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if win_ls[i] >= 20:
+                if win_ls[i] >= 5:
                     required_runs = req_runs[i]
                     break
     
@@ -184,7 +184,7 @@ def main():
     
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
-                if win_ls[i] < 15:
+                if win_ls[i] < 95:
                     req_wicket_value = req_wks[i]
                     break
     
