@@ -228,7 +228,7 @@ def main():
         ax.scatter(at_overs, req_value, s=600, color='red', label="Required Position")
         ax.axhline(target_score, ls='--', color='blue', label="Target Score")
         ax.text(1, target_score, f"Target Score: {target_score}", color='darkblue', fontsize=32)
-        ax.text(at_overs, req_value, f"{req_value}/{req_wk_value}", color='white', fontsize=32, 
+        ax.text(at_overs, req_value-100, f"{req_value}/{req_wk_value}", color='white', fontsize=32, 
                 horizontalalignment='center', verticalalignment='center', bbox=dict(facecolor='red', alpha=0.5))
         ax.text(at_overs, req_value, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
                 horizontalalignment='center', fontsize=28)
