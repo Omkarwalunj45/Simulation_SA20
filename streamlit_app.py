@@ -25,7 +25,7 @@ def main():
         current_wks = st.sidebar.number_input("Enter Current Wickets:", min_value=1, step=1)
         current_overs = st.sidebar.number_input("Enter Current Overs:", min_value=1, step=1)
         target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
-    
+        current_runs=current_score
         # Load and filter data
         df = load_data()
         # df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
