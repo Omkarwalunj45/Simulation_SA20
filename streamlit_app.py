@@ -6,36 +6,19 @@ import matplotlib.pyplot as plt
 # Load SA20 data
 @st.cache_data
 def load_data():
-    return pd.read_csv('Dataset/SA20_data.csv')
+    return pd.read_csv('Dataset/odi_latest.csv.csv')
 
 # Calculate win probabilities (adapted for T20)
-def calculate_win_probability(overs_left, wickets_in_hand, runs_to_target, balls_left):
-    """
-    Simplified model for T20 win probability calculation.
-    """
-    base_chance = 0.5  # Base chance for simplicity
-    overs_factor = (20 - overs_left) / 20
-    wickets_factor = wickets_in_hand / 10
-    target_factor = 1 - (runs_to_target / (6 * overs_left + 1))  # Run rate factor
-
-    win_probability = base_chance + 0.3 * overs_factor + 0.4 * wickets_factor + 0.3 * target_factor
-    return min(max(win_probability, 0), 1)  # Ensure probability stays between 0 and 1
 
 # Streamlit App
 def main():
-        st.title("SA20 Chase Simulation")
+        st.title("ODI Cricket Chase Simulation")
         st.sidebar.header("Match Setup")
     
         # Predefined Teams
-        teams = [
-            "Paarl Royals",
-            "MI Cape Town",
-            "Joburg Super Kings",
-            "Durban's Super Giants",
-            "Pretoria Capitals",
-            "Sunrisers Eastern Cape"
-        ]
-    
+        teams = ['Australia', 'Pakistan', 'New Zealand', 'India',
+               'Bangladesh', 'South Africa', 'England', 'Sri Lanka',
+               'West Indies','Afghanistan']
         # User inputs
         chasing_team = st.sidebar.selectbox("Select Chasing Team:", teams)
         bowling_team = st.sidebar.selectbox("Select Bowling Team:", [team for team in teams if team != chasing_team])
@@ -43,8 +26,9 @@ def main():
     
         # Load and filter data
         df = load_data()
-        df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
+        # df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
         df['isOut'] = df['player_dismissed'].apply(lambda x: 1 if type(x) == type('str') else 0)    
+        
     
         # match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
     
@@ -250,10 +234,7 @@ def main():
         current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
         at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
         target_score = st.slider('Target Score', min_value=0, max_value=300, step=1, value=230)
-    
-        # Example: Call the plot function with some data
-        req_value = 180  # Example required score
-        req_wk_value = 6  # Example wickets left
+
     
         # Call plotting function
         plot_chase_simulation(at_overs, req_value, req_wk_value, target_score)
