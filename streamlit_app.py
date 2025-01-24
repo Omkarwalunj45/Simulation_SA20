@@ -137,7 +137,7 @@ def main():
                     if pred_wks == 10:
                         break
                 if pred_runs > target:
-                #     break
+                     break
             return pred_runs
         #WIN wrt Chasing Team
         def get_win(pred_runs, target):
