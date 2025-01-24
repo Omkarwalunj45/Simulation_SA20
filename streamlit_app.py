@@ -159,7 +159,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if win_ls[i] >= 50:
+                if win_ls[i] >= 20:
                     required_runs = req_runs[i]
                     break
     
@@ -184,7 +184,7 @@ def main():
     
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
-                if win_ls[i] < 45:
+                if win_ls[i] < 15:
                     req_wicket_value = req_wks[i]
                     break
     
