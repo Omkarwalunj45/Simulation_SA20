@@ -228,11 +228,6 @@ def main():
         at_overs = st.slider("At Overs", min_value=10, max_value=50, step=1, value=20)
         target_score = st.slider("Target Score", min_value=0, max_value=450, step=10, value=250)
         
-        # Variables (replace with your values)
-        current_overs = 15
-        current_runs = 100
-        t1 = "Team 1"  # Replace with actual team name
-        
         # Find required runs and wickets
         req_value = find_runs(target_score, current_wks, at_overs)
         req_wk_value = find_wickets(target_score, current_wks, at_overs)
