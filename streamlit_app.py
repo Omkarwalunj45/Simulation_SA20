@@ -23,7 +23,7 @@ def main():
         bowling_team = st.sidebar.selectbox("Select Bowling Team:", [team for team in teams if team != chasing_team])
         current_score = st.sidebar.number_input("Enter Current Runs:", min_value=1, step=1)
         current_wks = st.sidebar.number_input("Enter Current Wickets:", min_value=1, step=1)
-        target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
+        target_score = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
     
         # Load and filter data
         df = load_data()
