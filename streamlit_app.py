@@ -159,7 +159,7 @@ def main():
                 tie_count = 0
                 lose_count = 0
     
-                for j in range(1000):
+                for j in range(100):
                     pred_runs = predict_runs(target, i, current_wickets, at_overs)
                     runs_ls.append(pred_runs)
                     result_pred = get_win(pred_runs, target)
@@ -177,7 +177,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if win_ls[i] >= 5:
+                if win_ls[i] >= 1:
                     required_runs = req_runs[i]
                     break
     
@@ -227,10 +227,10 @@ def main():
         
         ax.scatter(at_overs, req_value, s=600, color='red', label="Required Position")
         ax.axhline(target_score, ls='--', color='blue', label="Target Score")
-        ax.text(1, target_score + 10, f"Target Score: {target_score}", color='darkblue', fontsize=32)
+        ax.text(1, target_score, f"Target Score: {target_score}", color='darkblue', fontsize=32)
         ax.text(at_overs, req_value, f"{req_value}/{req_wk_value}", color='white', fontsize=32, 
                 horizontalalignment='center', verticalalignment='center', bbox=dict(facecolor='red', alpha=0.5))
-        ax.text(at_overs, req_value - 15, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
+        ax.text(at_overs, req_value, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
                 horizontalalignment='center', fontsize=28)
         ax.set_ylim(50, target_score + 20)
         ax.set_xticks(np.arange(10, 51, 5))
