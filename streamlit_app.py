@@ -78,7 +78,7 @@ def main():
                 p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
                 p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
                 p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
-                p_w = 1
+                p_w = 0.8
             elif teamName == t2:
                 p_0 = t2_pb[0]
                 p_1 = t2_pb[0] + t2_pb[1]
@@ -86,7 +86,7 @@ def main():
                 p_3 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3]
                 p_4 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4]
                 p_6 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4] + t2_pb[5]
-                p_w = 1
+                p_w = 0.8
             return p_0, p_1, p_2, p_3, p_4, p_6, p_w
     
         def predict_runs(target, current_score, current_wickets, current_overs):
@@ -100,18 +100,37 @@ def main():
             for i in range(leftover_balls):
                 r_value = np.random.random()
     
-                if r_value <= i2p_0:
-                    pred_runs += 0
-                elif r_value <= i2p_1:
-                    pred_runs += 1
-                elif r_value <= i2p_2:
-                    pred_runs += 2
-                elif r_value <= i2p_3:
-                    pred_runs += 3
-                elif r_value <= i2p_4:
-                    pred_runs += 4
-                elif r_value <= i2p_6:
+                # if r_value <= i2p_0:
+                #     pred_runs += 0
+                # elif r_value <= i2p_1:
+                #     pred_runs += 1
+                # elif r_value <= i2p_2:
+                #     pred_runs += 2
+                # elif r_value <= i2p_3:
+                #     pred_runs += 3
+                # elif r_value <= i2p_4:
+                #     pred_runs += 4
+                # elif r_value <= i2p_6:
+                #     pred_runs += 6
+                # else:
+                #     pred_runs += 0
+                #     pred_wks += 1
+                #     if pred_wks == 10:
+                #         break
+                # if pred_runs > target:
+                #     break
+                if r_value >= i2p_6:
                     pred_runs += 6
+                elif r_value >= i2p_4:
+                    pred_runs += 4
+                elif r_value >= i2p_3:
+                    pred_runs += 3
+                elif r_value >= i2p_2:
+                    pred_runs += 2
+                elif r_value >= i2p_1:
+                    pred_runs += 1
+                elif r_value >= i2p_0:
+                    pred_runs += 0
                 else:
                     pred_runs += 0
                     pred_wks += 1
@@ -119,7 +138,6 @@ def main():
                         break
                 if pred_runs > target:
                     break
-    
             return pred_runs
         #WIN wrt Chasing Team
         def get_win(pred_runs, target):
