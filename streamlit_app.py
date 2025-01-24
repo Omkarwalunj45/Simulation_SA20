@@ -71,7 +71,7 @@ def main():
         t2_pb = [i/sum(t2_outcomes_count) for i in t2_outcomes_count]
     
         def get_pbvalues(teamName):
-            if teamName == 't1':
+            if teamName == t1:
                 p_0 = t1_pb[0]
                 p_1 = t1_pb[0] + t1_pb[1]
                 p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2]
@@ -79,7 +79,7 @@ def main():
                 p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
                 p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
                 p_w = 1
-            elif teamName == 't2':
+            elif teamName == t2:
                 p_0 = t2_pb[0]
                 p_1 = t2_pb[0] + t2_pb[1]
                 p_2 = t2_pb[0] + t2_pb[1] + t2_pb[2]
