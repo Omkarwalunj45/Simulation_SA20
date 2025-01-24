@@ -72,7 +72,7 @@ def main():
     
         def get_pbvalues(teamName):
             if teamName == t1:
-                p_5 = t1_pb[0]
+                p_6 = t1_pb[0]
                 p_4 = t1_pb[0] + t1_pb[1]
                 p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2]
                 p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
