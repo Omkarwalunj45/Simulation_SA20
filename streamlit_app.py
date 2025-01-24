@@ -2,8 +2,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
-# Load SA20 data
+%matplotlib inline
+from ipywidgets import interactive
+import ipywidgets as widgets
+# Load ODI data
 @st.cache_data
 def load_data():
     return pd.read_csv('Dataset/odi_latest.csv')
@@ -22,7 +24,7 @@ def main():
         # User inputs
         chasing_team = st.sidebar.selectbox("Select Chasing Team:", teams)
         bowling_team = st.sidebar.selectbox("Select Bowling Team:", [team for team in teams if team != chasing_team])
-        target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
+        # target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
     
         # Load and filter data
         df = load_data()
@@ -35,7 +37,7 @@ def main():
         # Display inputs and options
         st.write(f"Chasing Team: {chasing_team}")
         st.write(f"Bowling Team: {bowling_team}")
-        st.write(f"Target: {target}")
+        # st.write(f"Target: {target}")
     
         t1 = chasing_team
         t2 = bowling_team
@@ -88,8 +90,8 @@ def main():
             return p_0, p_1, p_2, p_3, p_4, p_6, p_w
     
         def predict_runs(target, current_score, current_wickets, current_overs):
-            i1p_0, i1p_1, i1p_2, i1p_3, i1p_4, i1p_6, i1p_w = get_pbvalues(t1)
-            i2p_0, i2p_1, i2p_2, i2p_3, i2p_4, i2p_6, i2p_w = get_pbvalues(t2)
+            i1p_0, i1p_1, i1p_2, i1p_3, i1p_4, i1p_6, i1p_w = get_pbvalues(t2)
+            i2p_0, i2p_1, i2p_2, i2p_3, i2p_4, i2p_6, i2p_w = get_pbvalues(t1)
     
             pred_runs = current_score
             pred_wks = current_wickets
@@ -119,7 +121,7 @@ def main():
                     break
     
             return pred_runs
-    
+        #WIN wrt Chasing Team
         def get_win(pred_runs, target):
             if pred_runs > target:
                 return 'win'
@@ -200,47 +202,47 @@ def main():
     
             y = np.array([req_value for i in range(51)])
     
-        def plot_chase_simulation(at_overs, req_value, req_wk_value, target_score):
-            # Create a plot
-            fig, ax = plt.subplots(figsize=(23, 10))
+        # def plot_chase_simulation(at_overs, req_value, req_wk_value, target_score):
+        #     # Create a plot
+        #     fig, ax = plt.subplots(figsize=(23, 10))
             
-            # Scatter plot for the required score at the given overs
-            ax.scatter(at_overs, req_value, s=3000, color='red')
+        #     # Scatter plot for the required score at the given overs
+        #     ax.scatter(at_overs, req_value, s=3000, color='red')
         
-            # Draw horizontal line at target score
-            ax.axhline(target_score, ls='--', color='blue')
+        #     # Draw horizontal line at target score
+        #     ax.axhline(target_score, ls='--', color='blue')
         
-            # Add text labels
-            ax.text(1, target_score + 10, f'Target Score: {target_score}', color='darkblue', fontsize=13)
-            ax.text(at_overs, req_value, f'{req_value}/{req_wk_value}', color='white', fontsize=12,
-                    horizontalalignment='center', verticalalignment='center')
-            ax.text(at_overs, req_value - 30, f'IND has to be at {req_value}/{req_wk_value} after {at_overs} ov',
-                    horizontalalignment='center')
+        #     # Add text labels
+        #     ax.text(1, target_score + 10, f'Target Score: {target_score}', color='darkblue', fontsize=13)
+        #     ax.text(at_overs, req_value, f'{req_value}/{req_wk_value}', color='white', fontsize=12,
+        #             horizontalalignment='center', verticalalignment='center')
+        #     ax.text(at_overs, req_value - 30, f'IND has to be at {req_value}/{req_wk_value} after {at_overs} ov',
+        #             horizontalalignment='center')
         
-            # Set y-axis limits
-            ax.set_ylim(50, target_score + 50)
+        #     # Set y-axis limits
+        #     ax.set_ylim(50, target_score + 50)
         
-            # Set x-ticks
-            ax.set_xticks(np.arange(0, 51, 1))
+        #     # Set x-ticks
+        #     ax.set_xticks(np.arange(0, 51, 1))
         
-            # Set titles and labels
-            ax.set_title('Where should IND be?', fontsize=20)
-            ax.set_xlabel('Overs')
-            ax.set_ylabel('Score')
+        #     # Set titles and labels
+        #     ax.set_title('Where should IND be?', fontsize=20)
+        #     ax.set_xlabel('Overs')
+        #     ax.set_ylabel('Score')
         
-            # Display plot in Streamlit
-            st.pyplot(fig)
+        #     # Display plot in Streamlit
+        #     st.pyplot(fig)
     
-        current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
-        req_wk_value=current_wks
-        at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
-        target_score = st.slider('Target Score', min_value=0, max_value=450, step=1, value=230)
-        current_runs=st.slider('Current Score', min_value=0, max_value=450, step=1, value=230)
-        req_value=current_runs
+        # current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
+        # req_wk_value=current_wks
+        # at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
+        # target_score = st.slider('Target Score', min_value=0, max_value=450, step=1, value=230)
+        # current_runs=st.slider('Current Score', min_value=0, max_value=450, step=1, value=230)
+        # req_value=current_runs
 
     
-        # Call plotting function
-        plot_chase_simulation(at_overs, req_value, req_wk_value, target_score)
+        # # Call plotting function
+        # plot_chase_simulation(at_overs, req_value, req_wk_value, target_score)
 
 
 
