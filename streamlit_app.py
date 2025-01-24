@@ -177,7 +177,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if (win_ls[i] <= 20) & (win_ls[i] >= 5):
+                if (win_ls[i] <= 5) & (win_ls[i] >= 1):
                     required_runs = req_runs[i]
                     break
     
