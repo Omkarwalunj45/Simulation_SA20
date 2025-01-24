@@ -203,7 +203,7 @@ def main():
             req_wk_value = current_wks
         
         # Plotting
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots(figsize=(30, 18))
         y = np.array([req_value for _ in range(51)])
         x = np.arange(1, 51)
         
@@ -220,7 +220,7 @@ def main():
         ax.set_xlabel("Overs")
         ax.set_ylabel("Score")
         ax.legend()
-        fig, ax = plt.subplots(figsize=(20, 10))
+        
         # Displaying the plot
         st.pyplot(fig)
         
