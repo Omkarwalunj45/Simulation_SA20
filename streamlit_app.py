@@ -24,12 +24,14 @@ def main():
         # User inputs
         chasing_team = st.sidebar.selectbox("Select Chasing Team:", teams)
         bowling_team = st.sidebar.selectbox("Select Bowling Team:", [team for team in teams if team != chasing_team])
-        # target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
+        current_score = st.sidebar.number_input("Enter Current Runs:", min_value=1, step=1)
+        current_wks = st.sidebar.number_input("Enter Current Wickets:", min_value=1, step=1)
+        target = st.sidebar.number_input("Enter Target Runs:", min_value=1, step=1)
     
         # Load and filter data
         df = load_data()
         # df['total_runs'] = df.apply(lambda x: x['runs_off_bat'] + x['extras'], axis = 1)
-        df['isOut'] = df['is_wkt']    
+        df=df.rename(columns={'is_wkt':'isOut'})
         
     
         # match_data = data[(data["batting_team"] == chasing_team) & (data["bowling_team"] == bowling_team)]
@@ -191,58 +193,35 @@ def main():
             return req_wicket_value
     
         def find_runs_wickets(current_wks, at_overs, target_score):
-            plt.figure(figsize=(23, 10))
+            plt.figure(figsize=(53, 30))
     
             req_value = find_runs(target_score, current_wks, at_overs)
             req_wk_value = find_wickets(target_score, current_wks, at_overs)
     
-            # if at_overs == 10:
-            #     req_value = 75
-            #     req_wk_value = 1
+            if at_overs == current_overs:
+                req_value = current_runs
+                req_wk_value = current_wks
     
             y = np.array([req_value for i in range(51)])
+            plt.scatter(at_overs, req_value, s = 3000, color = 'red')
+            plt.axhline(target_score, ls = '--', color = 'blue')
+            plt.text( 1, target_score + 10, 'Target Score :' + str(target_score) , color = 'darkblue', fontsize = 23)
+            plt.text( at_overs, req_value, str(req_value) + '/' + str(req_wk_value), color = 'white', fontsize = 22,  horizontalalignment='center', verticalalignment='center')
+            plt.text(at_overs, req_value - 30, str(t1) + 'has to be at ' + str(req_value) + '/' +  str(req_wk_value) + ' after ' + str(at_overs) + ' ov', horizontalalignment='center')
+            plt.ylim(50, target_score + 20)
+            plt.xticks(x)
+            plt.title('Where should' + str(t1) + 'be?', fontsize = 25)
+            plt.xlabel('Overs')
+            plt.ylabel('Score')
+            plt.show()
     
-        # def plot_chase_simulation(at_overs, req_value, req_wk_value, target_score):
-        #     # Create a plot
-        #     fig, ax = plt.subplots(figsize=(23, 10))
-            
-        #     # Scatter plot for the required score at the given overs
-        #     ax.scatter(at_overs, req_value, s=3000, color='red')
+        print('current_score = ' + str(t1) + ':' + str(current_score) + '/' + str(current_wks) + '(' + str(current_overs) + 'overs)')
+        print('')
         
-        #     # Draw horizontal line at target score
-        #     ax.axhline(target_score, ls='--', color='blue')
-        
-        #     # Add text labels
-        #     ax.text(1, target_score + 10, f'Target Score: {target_score}', color='darkblue', fontsize=13)
-        #     ax.text(at_overs, req_value, f'{req_value}/{req_wk_value}', color='white', fontsize=12,
-        #             horizontalalignment='center', verticalalignment='center')
-        #     ax.text(at_overs, req_value - 30, f'IND has to be at {req_value}/{req_wk_value} after {at_overs} ov',
-        #             horizontalalignment='center')
-        
-        #     # Set y-axis limits
-        #     ax.set_ylim(50, target_score + 50)
-        
-        #     # Set x-ticks
-        #     ax.set_xticks(np.arange(0, 51, 1))
-        
-        #     # Set titles and labels
-        #     ax.set_title('Where should IND be?', fontsize=20)
-        #     ax.set_xlabel('Overs')
-        #     ax.set_ylabel('Score')
-        
-        #     # Display plot in Streamlit
-        #     st.pyplot(fig)
-    
-        # current_wks = st.slider('Current Wickets', min_value=1, max_value=10, step=1, value=1)
-        # req_wk_value=current_wks
-        # at_overs = st.slider('At Overs', min_value=10, max_value=50, step=1, value=10)
-        # target_score = st.slider('Target Score', min_value=0, max_value=450, step=1, value=230)
-        # current_runs=st.slider('Current Score', min_value=0, max_value=450, step=1, value=230)
-        # req_value=current_runs
-
-    
-        # # Call plotting function
-        # plot_chase_simulation(at_overs, req_value, req_wk_value, target_score)
+        interactive_plot = interactive(find_runs_wickets, current_wks = widgets.IntSlider(min=1, max=9, step=1, value=current_wks),  at_overs=widgets.IntSlider(min=10, max=50, step=1, value=current_overs), target_score = widgets.IntSlider(min=0, max=450, step=1, value=target))
+        output = interactive_plot.children[-1]
+        output.layout.height = '450px'
+        interactive_plot    
 
 
 
