@@ -188,39 +188,83 @@ def main():
                     break
     
             return req_wicket_value
-        %matplotlib inline
-        from ipywidgets import interactive
-        import ipywidgets as widgets
-        def find_runs_wickets(current_wks, at_overs, target_score):
-            plt.figure(figsize=(53, 30))
+
     
-            req_value = find_runs(target_score, current_wks, at_overs)
-            req_wk_value = find_wickets(target_score, current_wks, at_overs)
+        # %matplotlib inline
+        # from ipywidgets import interactive
+        # import ipywidgets as widgets
+        # def find_runs_wickets(current_wks, at_overs, target_score):
+        #     plt.figure(figsize=(53, 30))
     
-            if at_overs == current_overs:
-                req_value = current_runs
-                req_wk_value = current_wks
+        #     req_value = find_runs(target_score, current_wks, at_overs)
+        #     req_wk_value = find_wickets(target_score, current_wks, at_overs)
     
-            y = np.array([req_value for i in range(51)])
-            plt.scatter(at_overs, req_value, s = 3000, color = 'red')
-            plt.axhline(target_score, ls = '--', color = 'blue')
-            plt.text( 1, target_score + 10, 'Target Score :' + str(target_score) , color = 'darkblue', fontsize = 23)
-            plt.text( at_overs, req_value, str(req_value) + '/' + str(req_wk_value), color = 'white', fontsize = 22,  horizontalalignment='center', verticalalignment='center')
-            plt.text(at_overs, req_value - 30, str(t1) + 'has to be at ' + str(req_value) + '/' +  str(req_wk_value) + ' after ' + str(at_overs) + ' ov', horizontalalignment='center')
-            plt.ylim(50, target_score + 20)
-            plt.xticks(x)
-            plt.title('Where should' + str(t1) + 'be?', fontsize = 25)
-            plt.xlabel('Overs')
-            plt.ylabel('Score')
-            plt.show()
+        #     if at_overs == current_overs:
+        #         req_value = current_runs
+        #         req_wk_value = current_wks
     
-        print('current_score = ' + str(t1) + ':' + str(current_score) + '/' + str(current_wks) + '(' + str(current_overs) + 'overs)')
-        print('')
+        #     y = np.array([req_value for i in range(51)])
+        #     plt.scatter(at_overs, req_value, s = 3000, color = 'red')
+        #     plt.axhline(target_score, ls = '--', color = 'blue')
+        #     plt.text( 1, target_score + 10, 'Target Score :' + str(target_score) , color = 'darkblue', fontsize = 23)
+        #     plt.text( at_overs, req_value, str(req_value) + '/' + str(req_wk_value), color = 'white', fontsize = 22,  horizontalalignment='center', verticalalignment='center')
+        #     plt.text(at_overs, req_value - 30, str(t1) + 'has to be at ' + str(req_value) + '/' +  str(req_wk_value) + ' after ' + str(at_overs) + ' ov', horizontalalignment='center')
+        #     plt.ylim(50, target_score + 20)
+        #     plt.xticks(x)
+        #     plt.title('Where should' + str(t1) + 'be?', fontsize = 25)
+        #     plt.xlabel('Overs')
+        #     plt.ylabel('Score')
+        #     plt.show()
+    
+        # print('current_score = ' + str(t1) + ':' + str(current_score) + '/' + str(current_wks) + '(' + str(current_overs) + 'overs)')
+        # print('')
         
-        interactive_plot = interactive(find_runs_wickets, current_wks = widgets.IntSlider(min=1, max=9, step=1, value=current_wks),  at_overs=widgets.IntSlider(min=10, max=50, step=1, value=current_overs), target_score = widgets.IntSlider(min=0, max=450, step=1, value=target))
-        output = interactive_plot.children[-1]
-        output.layout.height = '450px'
-        interactive_plot    
+        # interactive_plot = interactive(find_runs_wickets, current_wks = widgets.IntSlider(min=1, max=9, step=1, value=current_wks),  at_overs=widgets.IntSlider(min=10, max=50, step=1, value=current_overs), target_score = widgets.IntSlider(min=0, max=450, step=1, value=target))
+        # output = interactive_plot.children[-1]
+        # output.layout.height = '450px'
+        # interactive_plot    
+
+        current_wks = st.slider("Current Wickets", min_value=1, max_value=9, step=1, value=3)
+        at_overs = st.slider("At Overs", min_value=10, max_value=50, step=1, value=20)
+        target_score = st.slider("Target Score", min_value=0, max_value=450, step=10, value=250)
+        
+        # Variables (replace with your values)
+        current_overs = 15
+        current_runs = 100
+        t1 = "Team 1"  # Replace with actual team name
+        
+        # Find required runs and wickets
+        req_value = find_runs(target_score, current_wks, at_overs)
+        req_wk_value = find_wickets(target_score, current_wks, at_overs)
+        
+        if at_overs == current_overs:
+            req_value = current_runs
+            req_wk_value = current_wks
+        
+        # Plotting
+        fig, ax = plt.subplots(figsize=(12, 6))
+        y = np.array([req_value for _ in range(51)])
+        x = np.arange(1, 51)
+        
+        ax.scatter(at_overs, req_value, s=200, color='red', label="Required Position")
+        ax.axhline(target_score, ls='--', color='blue', label="Target Score")
+        ax.text(1, target_score + 10, f"Target Score: {target_score}", color='darkblue', fontsize=12)
+        ax.text(at_overs, req_value, f"{req_value}/{req_wk_value}", color='white', fontsize=12, 
+                horizontalalignment='center', verticalalignment='center', bbox=dict(facecolor='red', alpha=0.5))
+        ax.text(at_overs, req_value - 15, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
+                horizontalalignment='center', fontsize=10)
+        ax.set_ylim(50, target_score + 20)
+        ax.set_xticks(np.arange(10, 51, 5))
+        ax.set_title(f"Where should {t1} be?", fontsize=16)
+        ax.set_xlabel("Overs")
+        ax.set_ylabel("Score")
+        ax.legend()
+        
+        # Displaying the plot
+        st.pyplot(fig)
+        
+        # Display current score
+        st.write(f"**Current Score for {t1}:** {current_runs}/{current_wks} ({current_overs} overs)")
 
 
 
