@@ -199,7 +199,7 @@ def main():
         req_wk_value = find_wickets(current_score,target_score, current_wks, at_overs)
         
         if at_overs == current_overs:
-            req_value = current_runs
+            req_value = current_score
             req_wk_value = current_wks
         
         # Plotting
