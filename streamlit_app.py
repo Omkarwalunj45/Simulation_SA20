@@ -98,27 +98,7 @@ def main():
             leftover_balls = 300 - current_overs * 6
     
             for i in range(leftover_balls):
-                r_value = round(np.random.random(), 5)
-        # w,0,1,2,3,4,6
-                # if r_value <= i2p_0:
-                #     pred_runs += 0
-                # elif r_value <= i2p_1:
-                #     pred_runs += 1
-                # elif r_value <= i2p_2:
-                #     pred_runs += 2
-                # elif r_value <= i2p_3:
-                #     pred_runs += 3
-                # elif r_value <= i2p_4:
-                #     pred_runs += 4
-                # elif r_value <= i2p_6:
-                #     pred_runs += 6
-                # else:
-                #     pred_runs += 0
-                #     pred_wks += 1
-                #     if pred_wks == 10:
-                #         break
-                # if pred_runs > target:
-                #     break
+                r_value = np.random.random()
                 if r_value >= i2p_0:
                     pred_runs += 0
                 elif r_value >= i2p_1:
@@ -202,13 +182,13 @@ def main():
     
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
-                if win_ls[i] < 45:
+                if win_ls[i] <= 40:
                     req_wicket_value = req_wks[i]
                     break
     
             return req_wicket_value
 
-        current_wks = st.slider("Current Wickets", min_value=1, max_value=9, step=1, value=1)
+        current_wks = st.slider("Current Wickets", min_value=0, max_value=9, step=1, value=1)
         at_overs = st.slider("At Overs", min_value=10, max_value=50, step=1, value=current_overs)
         target_score = st.slider("Target Score", min_value=0, max_value=450, step=10, value=target)
         
@@ -221,7 +201,7 @@ def main():
             req_wk_value = current_wks
         
         # Plotting
-        fig, ax = plt.subplots(figsize=(30, 18))
+        fig, ax = plt.subplots(figsize=(70, 45))
         y = np.array([req_value for _ in range(51)])
         x = np.arange(1, 51)
         
@@ -232,7 +212,7 @@ def main():
                 horizontalalignment='center', verticalalignment='center', bbox=dict(facecolor='red', alpha=0.5))
         ax.text(at_overs, req_value, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
                 horizontalalignment='center', fontsize=48)
-        ax.set_ylim(50, target_score)
+        ax.set_ylim(0, target_score)
         ax.set_xticks(np.arange(10, 51, 5))
         ax.set_title(f"Where should {t1} be?", fontsize=44)
         ax.set_xlabel("Overs")
