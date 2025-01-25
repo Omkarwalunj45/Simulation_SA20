@@ -225,14 +225,14 @@ def main():
         y = np.array([req_value for _ in range(51)])
         x = np.arange(1, 51)
         
-        ax.scatter(at_overs, req_value, s=600, color='red', label="Required Position")
+        ax.scatter(at_overs, req_value, s=500, color='red', label="Required Position")
         ax.axhline(target_score, ls='--', color='blue', label="Target Score")
-        ax.text(1, target_score, f"Target Score: {target_score}", color='darkblue', fontsize=32)
-        ax.text(at_overs, req_value, f"{req_value}/{req_wk_value}", color='white', fontsize=32, 
+        ax.text(1, target_score, f"Target Score: {target_score}", color='darkblue', fontsize=42)
+        ax.text(at_overs, req_value, f"{req_value}/{req_wk_value}", color='white', fontsize=62, 
                 horizontalalignment='center', verticalalignment='center', bbox=dict(facecolor='red', alpha=0.5))
         ax.text(at_overs, req_value, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
-                horizontalalignment='center', fontsize=28)
-        ax.set_ylim(50, target_score + 20)
+                horizontalalignment='center', fontsize=48)
+        ax.set_ylim(50, target_score)
         ax.set_xticks(np.arange(10, 51, 5))
         ax.set_title(f"Where should {t1} be?", fontsize=44)
         ax.set_xlabel("Overs")
@@ -243,7 +243,7 @@ def main():
         st.pyplot(fig)
         
         # Display current score
-        st.write(f"**Current Score for {t1}:** {current_runs}/{current_wks} ({current_overs} overs)",fontsize=32)
+        st.write(f"**Current Score for {t1}:** {current_runs}/{current_wks} ({current_overs} overs)",fontsize=42)
 
 
 
