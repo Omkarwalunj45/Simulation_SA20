@@ -99,17 +99,17 @@ def main():
     
             for i in range(leftover_balls):
                 r_value = np.random.random()
-                if r_value >= i2p_0:
+                if r_value <= i2p_0:
                     pred_runs += 0
-                elif r_value >= i2p_1:
+                elif r_value <= i2p_1:
                     pred_runs += 1
-                elif r_value >= i2p_2:
+                elif r_value <= i2p_2:
                     pred_runs += 2
-                elif r_value >= i2p_3:
+                elif r_value <= i2p_3:
                     pred_runs += 3
-                elif r_value >= i2p_4:
+                elif r_value <= i2p_4:
                     pred_runs += 4
-                elif r_value >= i2p_6:
+                elif r_value <= i2p_6:
                     pred_runs += 6
                 else:
                     pred_runs += 0
