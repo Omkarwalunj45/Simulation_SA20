@@ -72,12 +72,12 @@ def main():
     
         def get_pbvalues(teamName):
             if teamName == t1:
-                p_6 = t1_pb[0]
-                p_4 = t1_pb[0] + t1_pb[1]
-                p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2]
-                p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
-                p_1 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
-                p_0 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
+                p_0 = t1_pb[0]
+                p_1 = t1_pb[0] + t1_pb[1]
+                p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2]
+                p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
+                p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
+                p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
                 p_w = 0.8
             elif teamName == t2:
                 p_0 = t2_pb[0]
@@ -119,18 +119,18 @@ def main():
                 #         break
                 # if pred_runs > target:
                 #     break
-                if r_value >= i2p_6:
-                    pred_runs += 6
-                elif r_value >= i2p_4:
-                    pred_runs += 4
-                elif r_value >= i2p_3:
-                    pred_runs += 3
-                elif r_value >= i2p_2:
-                    pred_runs += 2
+                if r_value >= i2p_0:
+                    pred_runs += 0
                 elif r_value >= i2p_1:
                     pred_runs += 1
-                elif r_value >= i2p_0:
-                    pred_runs += 0
+                elif r_value >= i2p_2:
+                    pred_runs += 2
+                elif r_value >= i2p_3:
+                    pred_runs += 3
+                elif r_value >= i2p_4:
+                    pred_runs += 4
+                elif r_value >= i2p_6:
+                    pred_runs += 6
                 else:
                     pred_runs += 0
                     pred_wks += 1
@@ -177,7 +177,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if (win_ls[i] >= 40):
+                if (win_ls[i] >= 50):
                     required_runs = req_runs[i]
                     break
     
@@ -202,7 +202,7 @@ def main():
     
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
-                if win_ls[i] < 95:
+                if win_ls[i] < 45:
                     req_wicket_value = req_wks[i]
                     break
     
