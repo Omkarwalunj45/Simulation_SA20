@@ -223,7 +223,7 @@ def main():
         st.pyplot(fig)
         
         # Display current score
-        st.write(f"**Current Score for {t1}:** {current_runs}/{current_wks} ({current_overs} overs)",fontsize=42)
+        st.write(f"**Current Score for {t1}:** {current_runs}/{current_wks} ({current_overs} overs)")
 
 
 
