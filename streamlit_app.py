@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 @st.cache_data
 def load_data():
     return pd.read_csv('Dataset/odi_latest.csv')
+    
 
 # Calculate win probabilities (adapted for T20)
 
