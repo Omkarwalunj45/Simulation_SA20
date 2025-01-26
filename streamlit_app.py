@@ -72,13 +72,13 @@ def main():
     
         def get_pbvalues(teamName):
             if teamName == t1:
-                p_0 = t1_pb[0]
+                p_0 = t1_pb[0] 
                 p_1 = t1_pb[0] + t1_pb[1]
                 p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2]
                 p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
                 p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
                 p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
-                p_w = 0.8
+                p_w = 1
             elif teamName == t2:
                 p_0 = t2_pb[0]
                 p_1 = t2_pb[0] + t2_pb[1]
@@ -86,7 +86,7 @@ def main():
                 p_3 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3]
                 p_4 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4]
                 p_6 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4] + t2_pb[5]
-                p_w = 0.8
+                p_w = 1
             return p_0, p_1, p_2, p_3, p_4, p_6, p_w
     
         def predict_runs(target, current_score, current_wickets, current_overs):
@@ -119,7 +119,7 @@ def main():
                 if pred_runs > target:
                      break
             return pred_runs
-        #WIN wrt Chasing Team
+        #WIN wrt Chasing Team~
         def get_win(pred_runs, target):
             if pred_runs > target:
                 return 'win'
@@ -157,7 +157,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if (win_ls[i] >= 50):
+                if (win_ls[i] >= 4):
                     required_runs = req_runs[i]
                     break
     
@@ -171,37 +171,44 @@ def main():
             for i in range(current_wickets, 10):
                 win_count = 0
                 for j in range(100):
-                    pred_runs = predict_runs(target, current_score, i, at_overs)
+                    pred_runs = predict_runs(target, current_score, i, current_overs)
+                    print(pred_runs)
                     result_pred = get_win(pred_runs, target)
     
                     if result_pred == 'win':
                         win_count += 1
     
-                win_ls.append(win_count)
-                req_wks.append(i)
+                win_ls.append(win_count)       #1
+                req_wks.append(i)       #0
     
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
-                if win_ls[i] <= 40:
+                print(win_ls[i])
+                if win_ls[i] <= 6:
                     req_wicket_value = req_wks[i]
                     break
+                
     
             return req_wicket_value
 
         current_wks = st.slider("Current Wickets", min_value=0, max_value=9, step=1, value=1)
         at_overs = st.slider("At Overs", min_value=10, max_value=50, step=1, value=current_overs)
         target_score = st.slider("Target Score", min_value=0, max_value=450, step=10, value=target)
-        
+        curr_w=current_wks
         # Find required runs and wickets
-        req_value = find_runs(current_score,target_score, current_wks, at_overs)
-        req_wk_value = find_wickets(current_score,target_score, current_wks, at_overs)
+        req_value = find_runs(current_score,target_score, curr_w, at_overs)
+        req_wk_value = find_wickets(current_score,target_score, curr_w, at_overs)
+        
         
         if at_overs == current_overs:
             req_value = current_score
             req_wk_value = current_wks
-        
+        elif at_overs==50:
+            req_value = target_score
+            
+        curr_w = req_wk_value
         # Plotting
-        fig, ax = plt.subplots(figsize=(70, 45))
+        fig, ax = plt.subplots(figsize=(30, 18))
         y = np.array([req_value for _ in range(51)])
         x = np.arange(1, 51)
         
@@ -212,7 +219,7 @@ def main():
                 horizontalalignment='center', verticalalignment='center', bbox=dict(facecolor='red', alpha=0.5))
         ax.text(at_overs, req_value, f"{t1} has to be at {req_value}/{req_wk_value} after {at_overs} overs", 
                 horizontalalignment='center', fontsize=48)
-        ax.set_ylim(0, target_score)
+        ax.set_ylim(10, target_score)
         ax.set_xticks(np.arange(10, 51, 5))
         ax.set_title(f"Where should {t1} be?", fontsize=44)
         ax.set_xlabel("Overs")
@@ -230,4 +237,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
