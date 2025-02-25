@@ -113,7 +113,7 @@ def main():
             
             for i in range(leftover_balls):
                 # Generate a random number between min_prob and 1
-                r_value = np.random.uniform(min_prob, 1)
+                r_value = np.random.uniform(0, 1)
                 
                 chosen_outcome = None
                 # Iterate through the sorted pairs to pick the outcome
@@ -125,7 +125,7 @@ def main():
                 
                 # If for some reason none qualifies, default to the outcome with the lowest probability.
                 if chosen_outcome is None:
-                    chosen_outcome = sorted_pairs[0][0]
+                    chosen_outcome = 'w'
                 
                 # Process the chosen outcome.
                 if chosen_outcome == 'w':
