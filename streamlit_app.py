@@ -70,9 +70,28 @@ def main():
     
         t1_pb = [i/sum(t1_outcomes_count) for i in t1_outcomes_count]
         t2_pb = [i/sum(t2_outcomes_count) for i in t2_outcomes_count]
+        
     
         import numpy as np
-
+        
+        def get_pbvalues(teamName):
+                    if teamName == t1:
+                        p_0 = t1_pb[0] 
+                        p_1 = t1_pb[1]
+                        p_2 = t1_pb[2]
+                        p_3 = t1_pb[3]
+                        p_4 = t1_pb[4]
+                        p_6 = t1_pb[5]
+                        p_w = t1_pb[6]
+                    elif teamName == t2:
+                        p_0 = t2_pb[0]
+                        p_1 = t2_pb[1]
+                        p_2 = t2_pb[2]
+                        p_3 = t2_pb[3]
+                        p_4 = t2_pb[4]
+                        p_6 = t2_pb[5]
+                        p_w = t2_pb[6]
+                    return p_0, p_1, p_2, p_3, p_4, p_6, p_w
         def predict_runs(target, current_score, current_wickets, current_overs):
             # Get probabilities for the chasing team using get_pbvalues.
             # t1 is the chasing team.
