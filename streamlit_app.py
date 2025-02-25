@@ -208,7 +208,7 @@ def main():
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
                 print(win_ls[i])
-                if win_ls[i] <= 10:
+                if win_ls[i] <= 1:
                     req_wicket_value = req_wks[i]
                     break
                 
