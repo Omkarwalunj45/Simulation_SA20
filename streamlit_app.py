@@ -104,8 +104,8 @@ def main():
             # Sort the pairs in ascending order by the probability value.
             sorted_pairs = sorted(outcome_prob_pairs, key=lambda x: x[1])
             
-            # Get the minimum probability from the sorted pairs.
-            min_prob = sorted_pairs[0][0]
+            # Get the minimum probability from the sorted pairs.s
+            min_prob = sorted_pairs[0][1]
             
             pred_runs = current_score
             pred_wks = current_wickets
