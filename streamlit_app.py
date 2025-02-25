@@ -71,54 +71,58 @@ def main():
         t1_pb = [i/sum(t1_outcomes_count) for i in t1_outcomes_count]
         t2_pb = [i/sum(t2_outcomes_count) for i in t2_outcomes_count]
     
-        def get_pbvalues(teamName):
-            if teamName == t1:
-                p_0 = t1_pb[0] 
-                p_1 = t1_pb[0] + t1_pb[1]
-                p_2 = t1_pb[0] + t1_pb[1] + t1_pb[2]
-                p_3 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3]
-                p_4 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4]
-                p_6 = t1_pb[0] + t1_pb[1] + t1_pb[2] + t1_pb[3] + t1_pb[4] + t1_pb[5]
-                p_w = 1
-            elif teamName == t2:
-                p_0 = t2_pb[0]
-                p_1 = t2_pb[0] + t2_pb[1]
-                p_2 = t2_pb[0] + t2_pb[1] + t2_pb[2]
-                p_3 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3]
-                p_4 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4]
-                p_6 = t2_pb[0] + t2_pb[1] + t2_pb[2] + t2_pb[3] + t2_pb[4] + t2_pb[5]
-                p_w = 1
-            return p_0, p_1, p_2, p_3, p_4, p_6, p_w
-    
+        import numpy as np
+
         def predict_runs(target, current_score, current_wickets, current_overs):
-            i1p_0, i1p_1, i1p_2, i1p_3, i1p_4, i1p_6, i1p_w = get_pbvalues(t2)
-            i2p_0, i2p_1, i2p_2, i2p_3, i2p_4, i2p_6, i2p_w = get_pbvalues(t1)
-    
+            # Get probabilities for the chasing team using get_pbvalues.
+            # t1 is the chasing team.
+            p_0, p_1, p_2, p_3, p_4, p_6, p_w = get_pbvalues(t1)
+            # List of outcomes in the same order.
+            outcomes = [0, 1, 2, 3, 4, 6, 'w']
+            
+            # Build the list of outcome-probability pairs.
+            outcome_prob_pairs = [(outcome, prob) for outcome, prob in zip(outcomes, [p_0, p_1, p_2, p_3, p_4, p_6, p_w])]
+            # Sort the pairs in ascending order by the probability value.
+            sorted_pairs = sorted(outcome_prob_pairs, key=lambda x: x[1])
+            
+            # Get the minimum probability from the sorted pairs.
+            min_prob = sorted_pairs[0][0]
+            
             pred_runs = current_score
             pred_wks = current_wickets
-            leftover_balls = 300 - current_overs * 6
-    
+            leftover_balls = int(300 - current_overs * 6)
+            
             for i in range(leftover_balls):
-                r_value = np.random.random()
-                if r_value <= i2p_0:
-                    pred_runs += 0
-                elif r_value <= i2p_1:
-                    pred_runs += 1
-                elif r_value <= i2p_2:
-                    pred_runs += 2
-                elif r_value <= i2p_3:
-                    pred_runs += 3
-                elif r_value <= i2p_4:
-                    pred_runs += 4
-                elif r_value <= i2p_6:
-                    pred_runs += 6
-                else:
-                    pred_runs += 0
+                # Generate a random number between min_prob and 1
+                r_value = np.random.uniform(min_prob, 1)
+                
+                chosen_outcome = None
+                # Iterate through the sorted pairs to pick the outcome
+                for outcome, prob in sorted_pairs:
+                    if prob <= r_value:
+                        chosen_outcome = outcome
+                    else:
+                        break  # since the list is sorted, further probabilities are higher
+                
+                # If for some reason none qualifies, default to the outcome with the lowest probability.
+                if chosen_outcome is None:
+                    chosen_outcome = sorted_pairs[0][0]
+                
+                # Process the chosen outcome.
+                if chosen_outcome == 'w':
                     pred_wks += 1
-                    if pred_wks == 10:
-                        break
+                    outcome_run = 0
+                else:
+                    outcome_run = chosen_outcome
+                
+                pred_runs += outcome_run
+                
+                # If all wickets are lost or target achieved, end the simulation.
+                if pred_wks == 10:
+                    break
                 if pred_runs > target:
-                     break
+                    break
+            
             return pred_runs
         #WIN wrt Chasing Team~
         def get_win(pred_runs, target):
@@ -158,7 +162,7 @@ def main():
     
             required_runs = current_score
             for i in range(len(req_runs)):
-                if (win_ls[i] >= 3):
+                if (win_ls[i] >= 40):
                     required_runs = req_runs[i]
                     break
     
@@ -185,7 +189,7 @@ def main():
             req_wicket_value = current_wickets
             for i in range(len(req_wks)):
                 print(win_ls[i])
-                if win_ls[i] <= 4:
+                if win_ls[i] <= 30:
                     req_wicket_value = req_wks[i]
                     break
                 
