@@ -137,9 +137,9 @@ def main():
                 pred_runs += outcome_run
                 
                 # If all wickets are lost or target achieved, end the simulation.
-                if pred_wks == 10:
+                if pred_wks >= 10:
                     break
-                if pred_runs > target:
+                if pred_runs >= target:
                     break
             
             return pred_runs
